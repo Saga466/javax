@@ -1,0 +1,71 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class TanksGame extends JFrame implements KeyListener {
+    private static final int WIDTH = 800; // Width of the game window
+    private static final int HEIGHT = 600; // Height of the game window
+
+    private int playerX; // X-coordinate of the player tank
+    private int playerY; // Y-coordinate of the player tank
+
+    public TanksGame() {
+        setTitle("Tanks Game");
+        setSize(WIDTH, HEIGHT);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setResizable(false);
+
+        playerX = WIDTH / 2; // Starting X-coordinate of the player tank
+        playerY = HEIGHT / 2; // Starting Y-coordinate of the player tank
+
+        addKeyListener(this);
+        setFocusable(true);
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+
+        // Draw the player tank
+        g.setColor(Color.RED);
+        g.fillRect(playerX, playerY, 50, 50);
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        // Not used
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+
+        // Move the player tank based on the arrow keys
+        if (keyCode == KeyEvent.VK_UP) {
+            playerY -= 5;
+        } else if (keyCode == KeyEvent.VK_DOWN) {
+            playerY += 5;
+        } else if (keyCode == KeyEvent.VK_LEFT) {
+            playerX -= 5;
+        } else if (keyCode == KeyEvent.VK_RIGHT) {
+            playerX += 5;
+        }
+
+        // Repaint the game window to update the tank position
+        repaint();
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // Not used
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            TanksGame game = new TanksGame();
+            game.setVisible(true);
+        });
+    }
+}
